@@ -162,4 +162,20 @@ When drug B is placebo, the mean treatment effect (ATE) of drug A is the average
 5. Calculate the sample variance of the bootstrap estimates.
 
 # Problem 5:
+Model (5) for females:
+$y_i = \beta_{0F} + \beta_{1F}z_i + \beta_{2F}x_{i1} + \varepsilon_{Fi}$
 
+Model (6) for males:
+$y_i = \beta_{0M} + \beta_{1M}z_i + \beta_{2M}x_{i1} + \varepsilon_{Mi}$
+
+Model (7):
+$y_i = \beta_0 + \beta_1z_i + \beta_2x_{i1} + \beta_3x_{i2} + \beta_4(z_i \times x_{i2}) + \beta_5(x_{i1} \times x_{i2}) + \varepsilon_{i}$
+
+\begin{align*}
+\beta_{0F} & \text{ corresponds to } \beta_0 \text{ when } x_{i2} = 0 \text{ (for females)}, \\
+\beta_{0M} & \text{ corresponds to } \beta_0 + \beta_3 \text{ when } x_{i2} = 1 \text{ (for males)}, \\
+\beta_{1F} & \text{ corresponds to } \beta_1 \text{ when } x_{i2} = 0 \text{ (for females)}, \\
+\beta_{1M} & \text{ corresponds to } \beta_1 + \beta_4 \text{ when } x_{i2} = 1 \text{ (for males)}, \\
+\beta_{2F} & \text{ corresponds to } \beta_2 \text{ when } x_{i2} = 0 \text{ (for females)}, \\
+\beta_{2M} & \text{ corresponds to } \beta_2 + \beta_5 \text{ when } x_{i2} = 1 \text{ (for males)}.
+\end{align*}
