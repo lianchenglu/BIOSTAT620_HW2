@@ -1,6 +1,6 @@
 ---
 title: "HW2"
-author: "Liancheng"
+author: "Liancheng Lu"
 date: "2024-03-05"
 output: pdf_document
 ---
@@ -8,6 +8,8 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+Github: https://github.com/lianchenglu/BIOSTAT620_HW2
 
 # Problem 1: Choose all correct answers
 
@@ -133,7 +135,7 @@ The coefficient on Z(t) in both models is not statistically significant at the a
 
 # Problem 3: Consider a linear model that is used to estimate the treatment effect based on a dataset collected from a randomized clinical trial.
 
-## a. Explain why Xi and epsiloni are independent.
+## a. Explain why Xi and epsilon are independent.
 
 The randomization process ensured that each subject had an equal chance of receiving either treatment. This ensured that the two groups of subjects were similar in all known or unknown factors that might influence the outcome prior to drug administration.
 
@@ -145,21 +147,45 @@ The therapeutic effect of drug B is expressed by $-\beta_1$. When $Xi = -1$, $-\
 
 ## c. Show that the treatment effects identified in part (b) are invariant for the inclusion of any confounding covariate Z into the model (1).
 
-Since treatment group assignment was randomized, any potential confounding variable Z should be independent of treatment assignment Xi. Random assignment ensures that the distribution of Z is similar in the treatment and control groups if Z is any confounding variable related to Yi. This indicates that the influence of Z on Yi has been equally distributed at random across all treatment groups; hence, the estimated effect of Xi on Yi remains unchanged when Z is included in the model.
+Since treatment group assignment was randomized, any potential confounding variable Z should be independent of treatment assignment Xi. Random assignment ensures that the distribution of Z is similar in the treatment and control groups if Z is any confounding variable related to Yi. This indicates that the influence of Z on Yi has been equally distributed at random across all treatment groups; hence, the estimated effect of Xi on Yi remains unchanged when Z is included in the model, which means
+\[
+\mathbb{E}[Y_i|X_i = 1, Z] - \mathbb{E}[Y_i|X_i = -1, Z] = \mathbb{E}[Y_i|X_i = 1] - \mathbb{E}[Y_i|X_i = -1]
+\]
+
 
 ## d. Give the estimate of the causal effect (i.e. ATE) when drug B is a placebo.
-When drug B is placebo, the mean treatment effect (ATE) of drug A is the average difference in effect between the population receiving drug A and placebo in the randomized controlled trial. This effect difference is directly represented by the parameter beta1 in the model, which quantifies the average effect of drug A relative to placebo.
+When drug B is placebo, the mean treatment effect (ATE) of drug A is the average difference in effect between the population receiving drug A and placebo in the randomized controlled trial, which means $(\beta_{0}+\beta_{1})-(\beta_{0}-\beta_{1})=2\beta_{1}$.
 
 # Problem 4:
 
 ![Problem 4](HW2P4.jpg)
 
-## d
+## d. 
 
 1. Randomly draw a sample of observations from the original dataset with replacement to create a bootstrap sample. 2. Using the bootstrap sample, re-estimate the parameters $\hat{\alpha_1}$ and $\hat{\beta_1}$.
 3. Calculate the ratio $\frac{\hat{\beta_1}}{\hat{\alpha_1}}$ using the re-estimated parameters from the bootstrap sample.
 4. Repeat steps 1-3.
 5. Calculate the sample variance of the bootstrap estimates.
+
+pseudo
+
+```{r eval=FALSE}
+## Assume original_data is an array of tuples (Z, X, Y)
+original_data = [(Z1, X1, Y1), ..., (Zn, Xn, Yn)]
+num_bootstraps = 1000
+bootstrap_estimates = []
+
+for i in 1 to num_bootstraps do:
+    bootstrap_sample = sample_with_replacement(original_data, size=n)
+    alpha_hat = regress(X ~ Z using bootstrap_sample)
+    beta_hat = regress(Y ~ Z using bootstrap_sample)
+    beta_iv_star = beta_hat / alpha_hat
+    append(bootstrap_estimates, beta_iv_star)
+
+variance_beta_iv = variance(bootstrap_estimates)
+return variance_beta_iv
+```
+
 
 # Problem 5:
 Model (5) for females:
